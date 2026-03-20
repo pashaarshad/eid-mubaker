@@ -170,11 +170,12 @@ function createOwn() {
 }
 
 // ===========================
-// 6. AUDIO AUTOPLAY
+// 6. AUDIO CONTROL
 // ===========================
 
 function attemptAutoplay() {
   const audio = document.getElementById('bgAudio');
+  const icon = document.getElementById('audioIcon');
 
   // Try autoplay immediately
   audio.volume = 0.5;
@@ -183,6 +184,7 @@ function attemptAutoplay() {
   if (playPromise !== undefined) {
     playPromise.then(() => {
       // Autoplay worked!
+      if(icon) icon.textContent = '🔊';
       audioPlaying = true;
       audioInitialized = true;
     }).catch(() => {
@@ -195,13 +197,19 @@ function attemptAutoplay() {
 function setupAutoplayOnInteraction() {
   const events = ['click', 'touchstart', 'keydown'];
   
-  function startAudioOnInteraction() {
+  function startAudioOnInteraction(e) {
+    // Note: Don't treat clicking the audio button itself as the generic interaction
+    if (e.target.closest('#audioToggle')) return;
+    
     if (audioInitialized) return;
     audioInitialized = true;
 
     const audio = document.getElementById('bgAudio');
+    const icon = document.getElementById('audioIcon');
+    
     audio.volume = 0.5;
     audio.play().then(() => {
+      if(icon) icon.textContent = '🔊';
       audioPlaying = true;
     }).catch(() => {});
 
@@ -214,6 +222,25 @@ function setupAutoplayOnInteraction() {
   events.forEach(evt => {
     document.addEventListener(evt, startAudioOnInteraction, true);
   });
+}
+
+function toggleAudio() {
+  const audio = document.getElementById('bgAudio');
+  const icon = document.getElementById('audioIcon');
+
+  audioInitialized = true; // Manual toggle counts as initialization
+
+  if (audioPlaying) {
+    audio.pause();
+    if(icon) icon.textContent = '🔇';
+    audioPlaying = false;
+  } else {
+    audio.volume = 0.5;
+    audio.play().then(() => {
+      if(icon) icon.textContent = '🔊';
+      audioPlaying = true;
+    }).catch(() => {});
+  }
 }
 
 // ===========================
