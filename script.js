@@ -124,8 +124,13 @@ function createGreeting() {
 // 5. SHARING FUNCTIONS
 // ===========================
 function shareWhatsApp() {
-  const url = `${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(currentName)}`;
-  const message = `🌙✨ *Eid Mubarak!* ✨🌙\n\n${currentName} sent you a special Eid greeting!\n\n🕌 Click to view your greeting:\n${url}\n\n🤲 May this Eid bring joy, peace, and blessings to you and your family!\n\n_Create your own greeting & share!_ 🎉`;
+  // Ask the user for their name before sharing
+  const senderName = prompt('✨ Enter your name to share your Eid greeting:');
+  if (!senderName || !senderName.trim()) return;
+
+  const name = senderName.trim();
+  const url = `${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(name)}`;
+  const message = `🌙✨ *Eid Mubarak!* ✨🌙\n\n${name} sent you a special Eid greeting!\n\n🕌 Click to view your greeting:\n${url}\n\n🤲 May this Eid bring joy, peace, and blessings to you and your family!\n\n_Create your own greeting & share!_ 🎉`;
 
   window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
 }
@@ -165,12 +170,11 @@ function createOwn() {
 }
 
 // ===========================
-// 6. AUDIO CONTROL (AUTOPLAY)
+// 6. AUDIO AUTOPLAY
 // ===========================
 
 function attemptAutoplay() {
   const audio = document.getElementById('bgAudio');
-  const icon = document.getElementById('audioIcon');
 
   // Try autoplay immediately
   audio.volume = 0.5;
@@ -179,12 +183,10 @@ function attemptAutoplay() {
   if (playPromise !== undefined) {
     playPromise.then(() => {
       // Autoplay worked!
-      icon.textContent = '🔊';
       audioPlaying = true;
       audioInitialized = true;
     }).catch(() => {
       // Autoplay blocked — wait for first user interaction
-      console.log('Autoplay blocked. Will start on first user interaction.');
       setupAutoplayOnInteraction();
     });
   }
@@ -198,45 +200,20 @@ function setupAutoplayOnInteraction() {
     audioInitialized = true;
 
     const audio = document.getElementById('bgAudio');
-    const icon = document.getElementById('audioIcon');
-
     audio.volume = 0.5;
     audio.play().then(() => {
-      icon.textContent = '🔊';
       audioPlaying = true;
-    }).catch(() => {
-      console.log('Audio still cannot play.');
-    });
+    }).catch(() => {});
 
-    // Remove all listeners after first successful trigger
+    // Remove all listeners after first trigger
     events.forEach(evt => {
       document.removeEventListener(evt, startAudioOnInteraction, true);
     });
   }
 
-  // Attach listeners to capture on the entire document
   events.forEach(evt => {
     document.addEventListener(evt, startAudioOnInteraction, true);
   });
-}
-
-function toggleAudio() {
-  const audio = document.getElementById('bgAudio');
-  const icon = document.getElementById('audioIcon');
-
-  if (audioPlaying) {
-    audio.pause();
-    icon.textContent = '🔇';
-    audioPlaying = false;
-  } else {
-    audio.volume = 0.5;
-    audio.play().then(() => {
-      icon.textContent = '🔊';
-      audioPlaying = true;
-    }).catch(() => {
-      console.log('Audio playback failed.');
-    });
-  }
 }
 
 // ===========================

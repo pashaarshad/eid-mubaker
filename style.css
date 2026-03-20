@@ -659,68 +659,23 @@ body {
 }
 
 /* ========================================
-   VISITOR COUNTER
+   VISITOR COUNT (Subtle line below footer)
    ======================================== */
-.visitor-counter {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px 24px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 215, 0, 0.1);
-  border-radius: 50px;
-  margin-bottom: 8px;
-  animation: fadeSlideUp 1s ease 1.4s both;
+.visitor-count-line {
+  margin-top: 6px;
 }
 
-.visitor-counter .vc-icon {
-  font-size: 1.1rem;
-}
-
-.visitor-counter .vc-label {
-  font-size: 0.8rem;
+.visitor-count-line .vc-text {
+  font-size: 0.7rem;
   color: var(--text-secondary);
-  opacity: 0.7;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  opacity: 0.4;
+  letter-spacing: 0.3px;
 }
 
-.visitor-counter .vc-count {
-  font-size: 1rem;
-  font-weight: 600;
+.visitor-count-line .vc-text span {
   color: var(--text-gold);
-  min-width: 30px;
-  text-align: center;
-  letter-spacing: 1px;
-}
-
-/* ========================================
-   AUDIO BUTTON
-   ======================================== */
-.audio-btn {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  color: white;
-  font-size: 1.3rem;
-  cursor: pointer;
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.audio-btn:hover {
-  background: rgba(255, 215, 0, 0.15);
-  transform: scale(1.1);
+  font-weight: 500;
+  opacity: 0.7;
 }
 
 /* ========================================
