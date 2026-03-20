@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   checkURLParams();
   setupInputListeners();
   attemptAutoplay();
+  initVisitorCounter();
 });
 
 // ===========================
@@ -60,8 +61,7 @@ function showGreetingView(name) {
 
   // Typewriter effect for the message
   const messages = [
-    `May the magic of this Eid bring lots of happiness in your life and may you celebrate it with all your close friends & family.`,
-    `\n\nWishing you a blessed Eid filled with love, peace, and prosperity! 🌟`
+    `🕌🌙 Eid Mubarak! ✨ May Allah bless you abundantly 🤲💫, grant you happiness 😊, peace 🕊️, and success 🌟 in every step of your life. 💖`
   ];
 
   typewriterEffect(msgEl, messages.join(''), 30);
@@ -488,4 +488,41 @@ function launchConfetti() {
       });
     }
   }, 1500);
+}
+
+// ===========================
+// 10. VISITOR COUNTER
+// ===========================
+function initVisitorCounter() {
+  const counterEl = document.getElementById('visitorCount');
+  if (!counterEl) return;
+
+  // Get current count from localStorage
+  let count = parseInt(localStorage.getItem('eid_visitor_count') || '0', 10);
+
+  // Check if this is a new unique visitor
+  const hasVisited = localStorage.getItem('eid_has_visited');
+  if (!hasVisited) {
+    count++;
+    localStorage.setItem('eid_has_visited', 'true');
+    localStorage.setItem('eid_visitor_count', count.toString());
+  }
+
+  // Animate the counter number
+  animateCounter(counterEl, count);
+}
+
+function animateCounter(element, target) {
+  let current = 0;
+  const duration = 1500;
+  const stepTime = Math.max(Math.floor(duration / target), 30);
+
+  const timer = setInterval(() => {
+    current++;
+    element.textContent = current.toLocaleString();
+    if (current >= target) {
+      clearInterval(timer);
+      element.textContent = target.toLocaleString();
+    }
+  }, stepTime);
 }

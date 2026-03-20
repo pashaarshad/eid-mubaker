@@ -43,19 +43,6 @@ body {
   position: relative;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('assets/bg.webp') center/cover no-repeat;
-  opacity: 0.15;
-  z-index: 0;
-  pointer-events: none;
-}
-
 /* === Star Canvas === */
 #starCanvas {
   position: fixed;
@@ -78,36 +65,147 @@ body::before {
   pointer-events: none;
 }
 
-/* === Moon === */
+/* ========================================
+   LANTERNS (SVG Ornate Fanoos)
+   ======================================== */
+.lantern {
+  position: fixed;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.lantern-chain {
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, #DAA520);
+  margin: 0 auto;
+}
+
+.lantern-chain-short {
+  height: 20px;
+}
+
+.lantern-svg {
+  width: 100px;
+  height: 175px;
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(255, 170, 0, 0.4));
+}
+
+.lantern-svg-sm {
+  width: 80px;
+  height: 140px;
+}
+
+.lantern-svg-xs {
+  width: 55px;
+  height: 96px;
+}
+
+/* Lantern positions */
+.lantern-1 {
+  top: -10px;
+  left: 5%;
+  animation: lanternSwing1 4s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.lantern-2 {
+  top: -10px;
+  left: 42%;
+  animation: lanternSwing2 5s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.lantern-3 {
+  top: -10px;
+  right: 5%;
+  animation: lanternSwing3 4.5s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.lantern-4 {
+  top: -5px;
+  left: 22%;
+  animation: lanternSwing2 5.5s ease-in-out infinite;
+  transform-origin: top center;
+  opacity: 0.7;
+}
+
+.lantern-5 {
+  top: -5px;
+  right: 20%;
+  animation: lanternSwing1 4.8s ease-in-out infinite;
+  transform-origin: top center;
+  opacity: 0.7;
+}
+
+/* Flame flicker animation */
+.flame {
+  animation: flameFlicker 0.8s ease-in-out infinite alternate;
+  transform-origin: center bottom;
+}
+
+.flame-inner {
+  animation: flameFlicker 0.6s ease-in-out infinite alternate-reverse;
+  transform-origin: center bottom;
+}
+
+.lantern-aura {
+  animation: auraGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes flameFlicker {
+  0% { opacity: 0.6; transform: scaleX(0.85) scaleY(0.9); }
+  50% { opacity: 1; transform: scaleX(1.1) scaleY(1.05); }
+  100% { opacity: 0.8; transform: scaleX(0.9) scaleY(1.1); }
+}
+
+@keyframes auraGlow {
+  0% { opacity: 0.4; }
+  100% { opacity: 0.9; }
+}
+
+@keyframes lanternSwing1 {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+
+@keyframes lanternSwing2 {
+  0%, 100% { transform: rotate(3deg); }
+  50% { transform: rotate(-3deg); }
+}
+
+@keyframes lanternSwing3 {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(5deg); }
+}
+
+/* ========================================
+   CRESCENT MOON (Enhanced SVG)
+   ======================================== */
 .moon-container {
   position: fixed;
-  top: 30px;
-  right: 60px;
+  top: 20px;
+  right: 40px;
   z-index: 2;
   animation: moonFloat 6s ease-in-out infinite;
 }
 
-.moon {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #FFF8DC, #FFD700);
-  box-shadow: 
-    0 0 20px rgba(255, 215, 0, 0.5),
-    0 0 60px rgba(255, 215, 0, 0.3),
-    0 0 100px rgba(255, 215, 0, 0.15),
-    inset -15px -5px 0 0 var(--bg-dark);
-  position: relative;
+.moon-svg {
+  width: 110px;
+  height: 110px;
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
 }
 
-.moon-glow {
+.moon-glow-outer {
   position: absolute;
-  top: -20px;
-  left: -20px;
-  width: 120px;
-  height: 120px;
+  top: -30px;
+  left: -30px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,215,0,0.15), transparent 70%);
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.12) 0%, transparent 70%);
   animation: moonGlow 3s ease-in-out infinite alternate;
 }
 
@@ -117,110 +215,32 @@ body::before {
 }
 
 @keyframes moonGlow {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(1.3); opacity: 1; }
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.4); opacity: 1; }
 }
 
-/* === Lanterns === */
-.lantern {
+/* ========================================
+   MOSQUE SILHOUETTE
+   ======================================== */
+.mosque-silhouette {
   position: fixed;
-  z-index: 3;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 160px;
+  z-index: 2;
   pointer-events: none;
+  opacity: 0.45;
 }
 
-.lantern-1 { top: -10px; left: 8%; animation: lanternSwing1 4s ease-in-out infinite; }
-.lantern-2 { top: -10px; left: 50%; animation: lanternSwing2 5s ease-in-out infinite; }
-.lantern-3 { top: -10px; right: 8%; animation: lanternSwing3 4.5s ease-in-out infinite; }
-
-.lantern-body {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform-origin: top center;
+.mosque-silhouette svg {
+  width: 100%;
+  height: 100%;
 }
 
-.lantern-glow {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 170, 0, 0.3), transparent 70%);
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: lanternGlow 2s ease-in-out infinite alternate;
-}
-
-.lantern-top {
-  width: 6px;
-  height: 30px;
-  background: linear-gradient(to bottom, var(--gold-dark), var(--gold));
-  border-radius: 2px;
-}
-
-.lantern-middle {
-  width: 36px;
-  height: 50px;
-  background: linear-gradient(to bottom, #FFB347, #FF8C00, #FF6600);
-  border-radius: 8px 8px 12px 12px;
-  border: 2px solid var(--gold);
-  position: relative;
-  box-shadow: 
-    0 0 15px rgba(255, 140, 0, 0.6),
-    inset 0 0 15px rgba(255, 200, 0, 0.3);
-}
-
-.lantern-middle::before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 18px;
-  height: 18px;
-  border: 1.5px solid var(--gold);
-  border-radius: 50%;
-  opacity: 0.6;
-}
-
-.lantern-bottom {
-  width: 12px;
-  height: 8px;
-  background: var(--gold);
-  border-radius: 0 0 6px 6px;
-  margin-top: -1px;
-}
-
-.lantern-light {
-  width: 4px;
-  height: 12px;
-  background: var(--gold);
-  border-radius: 0 0 4px 4px;
-  opacity: 0.6;
-}
-
-@keyframes lanternSwing1 {
-  0%, 100% { transform: rotate(-5deg); }
-  50% { transform: rotate(5deg); }
-}
-
-@keyframes lanternSwing2 {
-  0%, 100% { transform: rotate(4deg); }
-  50% { transform: rotate(-4deg); }
-}
-
-@keyframes lanternSwing3 {
-  0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(6deg); }
-}
-
-@keyframes lanternGlow {
-  0% { opacity: 0.5; transform: translateX(-50%) scale(0.9); }
-  100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
-}
-
-/* === Views === */
+/* ========================================
+   VIEWS & LAYOUT
+   ======================================== */
 .view {
   position: relative;
   z-index: 10;
@@ -233,15 +253,17 @@ body::before {
 
 .main-content {
   width: 100%;
-  max-width: 560px;
+  max-width: 540px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  padding: 40px 20px 100px;
+  padding: 40px 16px 120px;
 }
 
-/* === Typography === */
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
 .title-arabic {
   font-family: 'Amiri', serif;
   font-size: 1.6rem;
@@ -256,6 +278,7 @@ body::before {
   font-weight: 700;
   line-height: 1.1;
   animation: fadeSlideDown 1s ease 0.4s both;
+  text-align: center;
 }
 
 .title-eid {
@@ -292,7 +315,7 @@ body::before {
   font-weight: 300;
   animation: fadeSlideDown 1s ease 0.6s both;
   text-align: center;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .hint-text {
@@ -302,7 +325,9 @@ body::before {
   animation: fadeSlideDown 1s ease 1.2s both;
 }
 
-/* === Glass Card === */
+/* ========================================
+   GLASS CARD
+   ======================================== */
 .glass-card {
   background: var(--card-bg);
   backdrop-filter: blur(20px);
@@ -375,7 +400,9 @@ body::before {
   border-radius: 0 0 4px 0;
 }
 
-/* === Input Card === */
+/* ========================================
+   INPUT CARD
+   ======================================== */
 .input-card {
   text-align: center;
 }
@@ -431,7 +458,9 @@ body::before {
   opacity: 1;
 }
 
-/* === Buttons === */
+/* ========================================
+   BUTTONS
+   ======================================== */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -522,7 +551,9 @@ body::before {
   box-shadow: 0 8px 30px rgba(0, 200, 150, 0.5);
 }
 
-/* === Greeting Card === */
+/* ========================================
+   GREETING CARD
+   ======================================== */
 .greeting-card {
   text-align: center;
   padding: 48px 32px;
@@ -573,15 +604,15 @@ body::before {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--bg-dark);
+  background: var(--bg-mid);
   padding: 0 12px;
   font-size: 1rem;
 }
 
 .greeting-message {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--text-secondary);
-  line-height: 1.7;
+  line-height: 1.8;
   margin-bottom: 20px;
   min-height: 80px;
 }
@@ -601,7 +632,9 @@ body::before {
   opacity: 0.7;
 }
 
-/* === Share Section === */
+/* ========================================
+   SHARE SECTION
+   ======================================== */
 .share-section {
   width: 100%;
   display: flex;
@@ -610,7 +643,9 @@ body::before {
   animation: fadeSlideUp 0.8s ease 1s both;
 }
 
-/* === Create Own === */
+/* ========================================
+   CREATE OWN
+   ======================================== */
 .create-own {
   text-align: center;
   margin-top: 10px;
@@ -623,7 +658,46 @@ body::before {
   margin-bottom: 12px;
 }
 
-/* === Audio Button === */
+/* ========================================
+   VISITOR COUNTER
+   ======================================== */
+.visitor-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 24px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  border-radius: 50px;
+  margin-bottom: 8px;
+  animation: fadeSlideUp 1s ease 1.4s both;
+}
+
+.visitor-counter .vc-icon {
+  font-size: 1.1rem;
+}
+
+.visitor-counter .vc-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.visitor-counter .vc-count {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-gold);
+  min-width: 30px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* ========================================
+   AUDIO BUTTON
+   ======================================== */
 .audio-btn {
   position: fixed;
   bottom: 80px;
@@ -649,15 +723,17 @@ body::before {
   transform: scale(1.1);
 }
 
-/* === Footer === */
+/* ========================================
+   FOOTER
+   ======================================== */
 .site-footer {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 16px 20px;
+  padding: 14px 20px;
   text-align: center;
-  background: linear-gradient(to top, rgba(10, 10, 26, 0.95), transparent);
+  background: linear-gradient(to top, rgba(10, 10, 26, 0.95), rgba(10, 10, 26, 0.6), transparent);
   z-index: 50;
 }
 
@@ -670,13 +746,13 @@ body::before {
 }
 
 .footer-text {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-secondary);
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .footer-link {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--gold);
   text-decoration: none;
   font-weight: 500;
@@ -704,7 +780,9 @@ body::before {
   width: 100%;
 }
 
-/* === Animations === */
+/* ========================================
+   ANIMATIONS
+   ======================================== */
 @keyframes fadeSlideDown {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -715,83 +793,9 @@ body::before {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* === Responsive === */
-@media (max-width: 640px) {
-  .moon-container {
-    top: 15px;
-    right: 20px;
-  }
-
-  .moon {
-    width: 55px;
-    height: 55px;
-  }
-
-  .moon-glow {
-    width: 85px;
-    height: 85px;
-    top: -15px;
-    left: -15px;
-  }
-
-  .title-arabic {
-    font-size: 1.2rem;
-  }
-
-  .title-main {
-    font-size: 2.8rem;
-  }
-
-  .title-mubarak {
-    font-size: 2.2rem;
-  }
-
-  .glass-card {
-    padding: 32px 20px;
-    border-radius: 20px;
-  }
-
-  .greeting-title {
-    font-size: 2.4rem;
-  }
-
-  .greeting-from {
-    font-size: 1.4rem;
-  }
-
-  .greeting-dua {
-    font-size: 1.4rem;
-  }
-
-  .lantern-2 {
-    display: none;
-  }
-
-  .main-content {
-    padding: 30px 10px 100px;
-  }
-}
-
-@media (max-width: 380px) {
-  .title-main {
-    font-size: 2.3rem;
-  }
-
-  .title-mubarak {
-    font-size: 1.8rem;
-  }
-
-  .greeting-title {
-    font-size: 2rem;
-  }
-
-  .btn {
-    padding: 14px 24px;
-    font-size: 0.95rem;
-  }
-}
-
-/* === Shake Animation for Invalid Input === */
+/* ========================================
+   SHAKE ANIMATION
+   ======================================== */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   20% { transform: translateX(-8px); }
@@ -804,7 +808,9 @@ body::before {
   animation: shake 0.5s ease;
 }
 
-/* === Typewriter cursor === */
+/* ========================================
+   TYPEWRITER CURSOR
+   ======================================== */
 .typewriter-cursor {
   display: inline-block;
   width: 2px;
@@ -818,4 +824,315 @@ body::before {
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+/* ========================================
+   RESPONSIVE — TABLET
+   ======================================== */
+@media (max-width: 768px) {
+  .moon-container {
+    top: 10px;
+    right: 15px;
+  }
+
+  .moon-svg {
+    width: 80px;
+    height: 80px;
+  }
+
+  .moon-glow-outer {
+    width: 120px;
+    height: 120px;
+    top: -20px;
+    left: -20px;
+  }
+
+  .title-arabic {
+    font-size: 1.3rem;
+  }
+
+  .title-main {
+    font-size: 3rem;
+  }
+
+  .title-mubarak {
+    font-size: 2.4rem;
+  }
+
+  .glass-card {
+    padding: 32px 24px;
+    border-radius: 20px;
+  }
+
+  .greeting-title {
+    font-size: 2.6rem;
+  }
+
+  .greeting-from {
+    font-size: 1.5rem;
+  }
+
+  .greeting-dua {
+    font-size: 1.5rem;
+  }
+
+  .lantern-svg {
+    width: 80px;
+    height: 140px;
+  }
+
+  .lantern-svg-sm {
+    width: 65px;
+    height: 114px;
+  }
+
+  .lantern-svg-xs {
+    width: 45px;
+    height: 79px;
+  }
+
+  .lantern-2 {
+    display: none;
+  }
+
+  .mosque-silhouette {
+    height: 100px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE — MOBILE
+   ======================================== */
+@media (max-width: 480px) {
+  .main-content {
+    padding: 20px 6px 120px;
+    gap: 14px;
+  }
+
+  .moon-container {
+    top: 5px;
+    right: 8px;
+  }
+
+  .moon-svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .moon-glow-outer {
+    width: 90px;
+    height: 90px;
+    top: -15px;
+    left: -15px;
+  }
+
+  .title-arabic {
+    font-size: 1.1rem;
+  }
+
+  .title-main {
+    font-size: 2.5rem;
+  }
+
+  .title-mubarak {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .glass-card {
+    padding: 28px 18px;
+    border-radius: 18px;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    margin-bottom: 18px;
+  }
+
+  .input-group input {
+    padding: 14px 16px;
+    font-size: 1rem;
+  }
+
+  .greeting-card {
+    padding: 32px 18px;
+  }
+
+  .greeting-icon {
+    font-size: 2.4rem;
+  }
+
+  .greeting-title {
+    font-size: 2.2rem;
+  }
+
+  .greeting-from {
+    font-size: 1.3rem;
+  }
+
+  .greeting-message {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .greeting-dua {
+    font-size: 1.3rem;
+  }
+
+  .greeting-dua-translation {
+    font-size: 0.78rem;
+  }
+
+  .btn {
+    padding: 14px 24px;
+    font-size: 0.95rem;
+  }
+
+  .btn-whatsapp {
+    font-size: 1rem;
+  }
+
+  .lantern-svg {
+    width: 60px;
+    height: 105px;
+  }
+
+  .lantern-svg-sm {
+    width: 50px;
+    height: 88px;
+  }
+
+  .lantern-4, .lantern-5 {
+    display: none;
+  }
+
+  .mosque-silhouette {
+    height: 70px;
+    opacity: 0.3;
+  }
+
+  .visitor-counter {
+    padding: 8px 18px;
+    gap: 8px;
+  }
+
+  .visitor-counter .vc-label {
+    font-size: 0.7rem;
+  }
+
+  .visitor-counter .vc-count {
+    font-size: 0.9rem;
+  }
+
+  .audio-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    bottom: 70px;
+    right: 12px;
+  }
+
+  .site-footer {
+    padding: 10px 14px;
+  }
+
+  .footer-text {
+    font-size: 0.7rem;
+  }
+
+  .footer-link {
+    font-size: 0.75rem;
+  }
+}
+
+/* ========================================
+   RESPONSIVE — VERY SMALL SCREENS
+   ======================================== */
+@media (max-width: 360px) {
+  .title-main {
+    font-size: 2.1rem;
+  }
+
+  .title-mubarak {
+    font-size: 1.7rem;
+  }
+
+  .greeting-title {
+    font-size: 1.9rem;
+  }
+
+  .greeting-from {
+    font-size: 1.15rem;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+
+  .glass-card {
+    padding: 24px 14px;
+    border-radius: 16px;
+  }
+
+  .lantern-svg {
+    width: 50px;
+    height: 88px;
+  }
+
+  .lantern-3 {
+    display: none;
+  }
+}
+
+/* ========================================
+   LANDSCAPE MOBILE
+   ======================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .main-content {
+    padding: 10px 10px 80px;
+    gap: 10px;
+  }
+
+  .title-arabic {
+    font-size: 1rem;
+  }
+
+  .title-main {
+    font-size: 2rem;
+  }
+
+  .title-mubarak {
+    font-size: 1.6rem;
+  }
+
+  .glass-card {
+    padding: 20px 16px;
+  }
+
+  .greeting-card {
+    padding: 20px 16px;
+  }
+
+  .greeting-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .lantern-svg {
+    width: 50px;
+    height: 88px;
+  }
+
+  .lantern-2, .lantern-4, .lantern-5 {
+    display: none;
+  }
+
+  .mosque-silhouette {
+    height: 50px;
+  }
 }
